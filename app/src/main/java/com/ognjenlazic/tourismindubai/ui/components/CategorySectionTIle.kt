@@ -8,9 +8,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ognjenlazic.tourismindubai.ui.theme.NotificationRed
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
@@ -43,7 +43,7 @@ fun CategorySectionTile(
                         Box(
                             modifier = Modifier
                                 .size(8.dp)
-                                .background(Color.Red, shape = CircleShape)
+                                .background(NotificationRed, shape = CircleShape)
                                 .align(Alignment.TopEnd)
                         )
                     }
