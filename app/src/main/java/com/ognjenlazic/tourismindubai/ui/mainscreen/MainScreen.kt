@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.ognjenlazic.tourismindubai.ui.components.CategorySection
 import com.ognjenlazic.tourismindubai.ui.components.VisualsSection
 import com.ognjenlazic.tourismindubai.ui.theme.ButtonBlue
+import com.ognjenlazic.tourismindubai.R
 
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel) {
@@ -42,14 +44,14 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "What are topics you enjoy talking about",
+                    text = stringResource(id = R.string.what_are_topics_you_enjoy),
                     textAlign = TextAlign.Center,
                     fontSize = 24.sp,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 Text(
-                    text = "topics will appear on your profile and help you find interesting places",
+                    text = stringResource(id = R.string.topics_will_appear),
                     fontSize = 14.sp,
                     textAlign = TextAlign.Center,
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -58,17 +60,17 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 
             topicsState.let { topics ->
                 CategorySection(
-                    title = "Sound",
+                    title = stringResource(id = R.string.sound),
                     sectionData = topics.sound
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 VisualsSection(
-                    title = "Visuals",
+                    title = stringResource(id = R.string.visuals),
                     visualData = topics.visuals
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 CategorySection(
-                    title = "Places",
+                    title = stringResource(id = R.string.places),
                     sectionData = topics.places
                 )
             }
@@ -78,13 +80,18 @@ fun MainScreen(viewModel: MainScreenViewModel) {
             onClick = { /* Handle next action */ },
             shape = RoundedCornerShape(25),
             colors = ButtonDefaults.buttonColors(containerColor = ButtonBlue),
-                    modifier = Modifier
+            modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(16.dp)
                 .width(300.dp)
                 .height(60.dp)
         ) {
-            Text(text = "next", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = Color.White)
+            Text(
+                text = stringResource(id = R.string.next),
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
         }
 
         errorState?.let { errorMessage ->
@@ -92,7 +99,7 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                 onDismissRequest = { viewModel.clearError() },
                 confirmButton = {
                     Button(onClick = { viewModel.clearError() }) {
-                        Text("OK")
+                        Text(stringResource(id = R.string.ok))
                     }
                 },
                 text = { Text(text = errorMessage) }

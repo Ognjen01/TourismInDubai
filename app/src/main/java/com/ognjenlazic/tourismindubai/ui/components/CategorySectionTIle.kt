@@ -12,8 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ognjenlazic.tourismindubai.R
 import com.ognjenlazic.tourismindubai.ui.theme.NotificationRed
 import com.ognjenlazic.tourismindubai.ui.theme.TileGray
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
@@ -83,7 +85,7 @@ fun CategorySectionTile(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "✅",
+                        text = stringResource(id = R.string.checkmark),
                         style = Typography.labelSmall
                     )
                 }
