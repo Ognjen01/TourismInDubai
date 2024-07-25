@@ -23,6 +23,7 @@ import com.ognjenlazic.tourismindubai.ui.components.CategorySection
 import com.ognjenlazic.tourismindubai.ui.components.VisualsSection
 import com.ognjenlazic.tourismindubai.ui.theme.ButtonBlue
 import com.ognjenlazic.tourismindubai.R
+import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel) {
@@ -46,14 +47,14 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                 Text(
                     text = stringResource(id = R.string.what_are_topics_you_enjoy),
                     textAlign = TextAlign.Center,
-                    fontSize = 24.sp,
+                    style = Typography.titleLarge,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
 
                 Text(
                     text = stringResource(id = R.string.topics_will_appear),
-                    fontSize = 14.sp,
                     textAlign = TextAlign.Center,
+                    style = Typography.titleSmall,
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
@@ -88,8 +89,7 @@ fun MainScreen(viewModel: MainScreenViewModel) {
         ) {
             Text(
                 text = stringResource(id = R.string.next),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
+                style = Typography.titleLarge,
                 color = Color.White
             )
         }

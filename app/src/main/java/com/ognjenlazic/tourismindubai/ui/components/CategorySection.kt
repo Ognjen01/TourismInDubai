@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.ui.tooling.preview.Preview
+import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
 fun CategorySection(
@@ -25,8 +26,7 @@ fun CategorySection(
     ) {
         Text(
             text = title,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
+            style = Typography.labelLarge,
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
