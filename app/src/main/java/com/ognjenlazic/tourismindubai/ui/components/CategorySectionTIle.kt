@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ognjenlazic.tourismindubai.ui.theme.NotificationRed
+import com.ognjenlazic.tourismindubai.ui.theme.TileGray
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
@@ -22,6 +23,9 @@ fun CategorySectionTile(
 ) {
     Card(
         shape = RoundedCornerShape(36.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = TileGray,
+        ),
         modifier = Modifier
             .wrapContentSize(),
         onClick = onClick

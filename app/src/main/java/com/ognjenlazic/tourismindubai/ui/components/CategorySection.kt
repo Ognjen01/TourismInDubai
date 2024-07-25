@@ -21,7 +21,7 @@ fun CategorySection(
     val secondHalf = sectionData.drop(halfSize)
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
     ) {
         Text(
             text = title,
