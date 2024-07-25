@@ -55,9 +55,7 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
-
     annotationProcessor("androidx.room:room-compiler:2.6.1")
-
     kapt("androidx.room:room-compiler:2.6.1")
 
     implementation(libs.androidx.core.ktx)
@@ -81,6 +79,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation("org.mockito:mockito-core:4.8.0")
+    testImplementation("app.cash.turbine:turbine:0.7.0")
+    testImplementation("org.mockito:mockito-inline:3.11.2")
+
 }
 
 kapt {
