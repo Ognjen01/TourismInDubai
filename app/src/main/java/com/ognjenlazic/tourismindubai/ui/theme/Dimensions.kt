@@ -25,7 +25,7 @@ object Dimens {
     val imageHeight = 200.dp
 
     // Main screen
-    val topSectionPadding = 160.dp
+    val topSectionPadding = 30.dp
     val bottomSpacerHeight = 80.dp
     val buttonHeight = 60.dp
     val buttonWidth = 300.dp
