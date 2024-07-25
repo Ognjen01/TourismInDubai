@@ -45,7 +45,6 @@ fun CategorySection(
                             emoji = item.emoji,
                             text = item.text,
                             isNotificationAvailable = item.isNotificationAvailable,
-                            onClick = { }
                         )
                     }
                 }
@@ -57,7 +56,6 @@ fun CategorySection(
                             emoji = item.emoji,
                             text = item.text,
                             isNotificationAvailable = item.isNotificationAvailable,
-                            onClick = { }
                         )
                     }
                 }
