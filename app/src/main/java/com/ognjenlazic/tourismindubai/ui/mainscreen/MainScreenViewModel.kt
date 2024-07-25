@@ -40,7 +40,7 @@ class MainScreenViewModel @Inject constructor(
         errorState.value = null
     }
 
-    private fun fetchTopics() {
+    fun fetchTopics() {
         viewModelScope.launch {
             val random = Random()
             try {
