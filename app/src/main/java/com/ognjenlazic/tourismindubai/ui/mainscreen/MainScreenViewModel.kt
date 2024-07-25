@@ -8,7 +8,6 @@ import com.ognjenlazic.tourismindubai.ui.components.VisualData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.Random
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +40,6 @@ class MainScreenViewModel @Inject constructor(
 
     fun fetchTopics() {
         viewModelScope.launch {
-            val random = Random()
             try {
                 val response = repository.getTopics()
 
@@ -49,7 +47,7 @@ class MainScreenViewModel @Inject constructor(
                     TileData(
                         emoji = it.emoji,
                         text = it.label,
-                        isNotificationAvailable = random.nextBoolean()
+                        isNotificationAvailable = it.emoji.lowercase() == "live"
                     )
                 }
 
