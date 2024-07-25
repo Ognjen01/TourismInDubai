@@ -15,14 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.ognjenlazic.tourismindubai.ui.components.CategorySection
 import com.ognjenlazic.tourismindubai.ui.components.VisualsSection
 import com.ognjenlazic.tourismindubai.ui.theme.ButtonBlue
 import com.ognjenlazic.tourismindubai.R
+import com.ognjenlazic.tourismindubai.ui.theme.Dimens
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
@@ -41,21 +39,21 @@ fun MainScreen(viewModel: MainScreenViewModel) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
-                    .padding(30.dp)
+                    .padding(Dimens.topSectionPadding)
                     .fillMaxSize()
             ) {
                 Text(
                     text = stringResource(id = R.string.what_are_topics_you_enjoy),
                     textAlign = TextAlign.Center,
                     style = Typography.titleLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = Dimens.mediumPadding)
                 )
 
                 Text(
                     text = stringResource(id = R.string.topics_will_appear),
                     textAlign = TextAlign.Center,
                     style = Typography.titleSmall,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = Dimens.mediumPadding)
                 )
             }
 
@@ -64,18 +62,18 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                     title = stringResource(id = R.string.sound),
                     sectionData = topics.sound
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(Dimens.largePadding))
                 VisualsSection(
                     title = stringResource(id = R.string.visuals),
                     visualData = topics.visuals
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(Dimens.largePadding))
                 CategorySection(
                     title = stringResource(id = R.string.places),
                     sectionData = topics.places
                 )
             }
-            Spacer(modifier = Modifier.height(80.dp))
+            Spacer(modifier = Modifier.height(Dimens.bottomSpacerHeight))
         }
         Button(
             onClick = { /* Handle next action */ },
@@ -83,9 +81,9 @@ fun MainScreen(viewModel: MainScreenViewModel) {
             colors = ButtonDefaults.buttonColors(containerColor = ButtonBlue),
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(16.dp)
-                .width(300.dp)
-                .height(60.dp)
+                .padding(Dimens.largePadding)
+                .width(Dimens.buttonWidth)
+                .height(Dimens.buttonHeight)
         ) {
             Text(
                 text = stringResource(id = R.string.next),

@@ -5,11 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.ognjenlazic.tourismindubai.R
+import com.ognjenlazic.tourismindubai.ui.theme.Dimens
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
@@ -22,23 +22,23 @@ fun CategorySection(
     val secondHalf = sectionData.drop(halfSize)
 
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+        modifier = Modifier.padding(horizontal = Dimens.largePadding, vertical = Dimens.smallPadding)
     ) {
         Text(
             text = title,
             style = Typography.labelLarge,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = Dimens.mediumPadding)
         )
 
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(bottom = 8.dp)
+                .padding(bottom = Dimens.mediumPadding)
         ) {
             Column {
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.mediumPadding),
+                    modifier = Modifier.padding(bottom = Dimens.mediumPadding)
                 ) {
                     firstHalf.forEach { item ->
                         CategorySectionTile(
@@ -49,7 +49,7 @@ fun CategorySection(
                     }
                 }
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Dimens.mediumPadding)
                 ) {
                     secondHalf.forEach { item ->
                         CategorySectionTile(
@@ -77,7 +77,7 @@ fun CategorySectionPreview(){
     )
 
     CategorySection(
-        title = "Sound",
+        title = stringResource(id = R.string.sound),
         sectionData = soundOptions
     )
 }

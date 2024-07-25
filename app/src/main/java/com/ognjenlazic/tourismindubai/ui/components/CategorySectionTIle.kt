@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.ognjenlazic.tourismindubai.R
+import com.ognjenlazic.tourismindubai.ui.theme.Dimens
 import com.ognjenlazic.tourismindubai.ui.theme.NotificationRed
 import com.ognjenlazic.tourismindubai.ui.theme.TileGray
 import com.ognjenlazic.tourismindubai.ui.theme.Typography
@@ -31,7 +31,7 @@ fun CategorySectionTile(
     val interactionSource = remember { MutableInteractionSource() }
 
     Card(
-        shape = RoundedCornerShape(36.dp),
+        shape = RoundedCornerShape(Dimens.mediumCorner),
         colors = CardDefaults.cardColors(
             containerColor = TileGray,
         ),
@@ -49,13 +49,13 @@ fun CategorySectionTile(
             }
     ) {
         Box(
-            modifier = Modifier.padding(horizontal = 18.dp, vertical = 8.dp)
+            modifier = Modifier.padding(horizontal = Dimens.largePadding, vertical = Dimens.mediumPadding)
         ) {
             if (rotation < 90f || rotation > 270f) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(Dimens.mediumPadding)
                 ) {
                     Box {
                         Text(
@@ -65,13 +65,13 @@ fun CategorySectionTile(
                         if (isNotificationAvailable) {
                             Box(
                                 modifier = Modifier
-                                    .size(8.dp)
+                                    .size(Dimens.mediumMargin)
                                     .background(NotificationRed, shape = CircleShape)
                                     .align(Alignment.TopEnd)
                             )
                         }
                     }
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Spacer(modifier = Modifier.width(Dimens.mediumMargin))
                     Text(
                         text = text,
                         style = Typography.labelSmall
@@ -81,7 +81,7 @@ fun CategorySectionTile(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp),
+                        .padding(Dimens.mediumPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
