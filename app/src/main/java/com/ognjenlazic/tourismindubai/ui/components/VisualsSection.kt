@@ -21,7 +21,7 @@ fun VisualsSection(
     visualData: List<VisualData>
 ) {
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
     ) {
         Text(
             text = title,
@@ -48,8 +48,8 @@ fun VisualTile(data: VisualData) {
     Card(
         shape = RoundedCornerShape(16.dp),
         modifier = Modifier
-            .width(120.dp)
-            .height(150.dp)
+            .width(160.dp)
+            .height(200.dp)
             .padding(1.dp)
     ) {
         Image(
