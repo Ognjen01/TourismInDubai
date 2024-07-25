@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TourismInDubai</string>
+    <string name="what_are_topics_you_enjoy">What are topics you enjoy talking about</string>
+    <string name="topics_will_appear">topics will appear on your profile and help you find interesting places</string>
+    <string name="sound">Sound</string>
+    <string name="visuals">Visuals</string>
+    <string name="places">Places</string>
+    <string name="next">next</string>
+    <string name="ok">OK</string>
+    <string name="checkmark">"✅"</string>
 </resources>

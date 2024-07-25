@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import java.util.Random
 import javax.inject.Inject
 
-
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
     private val repository: Repository
@@ -47,7 +46,11 @@ class MainScreenViewModel @Inject constructor(
                 val response = repository.getTopics()
 
                 _soundState.value = response.Sound.map {
-                    TileData(emoji = it.emoji, text = it.label, isNotificationAvailable = random.nextBoolean())
+                    TileData(
+                        emoji = it.emoji,
+                        text = it.label,
+                        isNotificationAvailable = random.nextBoolean()
+                    )
                 }
 
                 _visualState.value = response.Visuals.map {

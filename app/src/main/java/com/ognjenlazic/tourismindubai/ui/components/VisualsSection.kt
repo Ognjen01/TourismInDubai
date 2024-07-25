@@ -9,11 +9,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
+import com.ognjenlazic.tourismindubai.R
+import com.ognjenlazic.tourismindubai.ui.theme.Dimens
+import com.ognjenlazic.tourismindubai.ui.theme.Typography
 
 @Composable
 fun VisualsSection(
@@ -21,20 +22,19 @@ fun VisualsSection(
     visualData: List<VisualData>
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+        modifier = Modifier.padding(horizontal = Dimens.largePadding, vertical = Dimens.smallPadding)
     ) {
         Text(
             text = title,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier.padding(bottom = Dimens.mediumPadding),
+            style = Typography.labelSmall
         )
 
         Row(
             modifier = Modifier
                 .horizontalScroll(rememberScrollState())
-                .padding(bottom = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                .padding(bottom = Dimens.mediumPadding),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.mediumPadding)
         ) {
             visualData.forEach {
                 VisualTile(data = it)
@@ -46,11 +46,11 @@ fun VisualsSection(
 @Composable
 fun VisualTile(data: VisualData) {
     Card(
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(Dimens.smallCorner),
         modifier = Modifier
-            .width(160.dp)
-            .height(200.dp)
-            .padding(1.dp)
+            .width(Dimens.imageWidth)
+            .height(Dimens.imageHeight)
+            .padding(Dimens.extraSmallPadding)
     ) {
         Image(
             painter = rememberAsyncImagePainter(model = data.photo),
@@ -75,7 +75,7 @@ fun VisualSectionPreview() {
     )
 
     VisualsSection(
-        title = "Visuals",
+        title = stringResource(id = R.string.visuals),
         visualData = data
     )
 }
