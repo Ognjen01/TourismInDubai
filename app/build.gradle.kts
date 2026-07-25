@@ -49,6 +49,17 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    testOptions {
+        unitTests {
+            // Robolectric needs real resources to inflate the Compose tests on the JVM,
+            // which is what lets the UI state tests run in CI without an emulator.
+            isIncludeAndroidResources = true
+        }
+    }
+    lint {
+        warningsAsErrors = false
+        abortOnError = true
+    }
 }
 
 dependencies {
@@ -72,19 +83,23 @@ dependencies {
     implementation(libs.converter.gson)
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
-    testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    testImplementation("org.mockito:mockito-core:4.8.0")
-    testImplementation("app.cash.turbine:turbine:0.7.0")
-    testImplementation("org.mockito:mockito-inline:3.11.2")
 
+    // Unit tests. Collaborators are replaced with hand-written fakes rather than a mocking
+    // framework, so the tests describe behaviour instead of restating the implementation.
+    testImplementation(libs.junit)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+    testImplementation("app.cash.turbine:turbine:1.0.0")
+
+    // Compose UI state tests, executed on the JVM through Robolectric.
+    testImplementation("org.robolectric:robolectric:4.12.2")
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.androidx.ui.test.junit4)
 }
 
 kapt {

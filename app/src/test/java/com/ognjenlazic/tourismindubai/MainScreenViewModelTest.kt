@@ -1,79 +1,106 @@
 package com.ognjenlazic.tourismindubai
 
-import app.cash.turbine.test
-import com.ognjenlazic.tourismindubai.data.model.CategoryItem
-import com.ognjenlazic.tourismindubai.data.model.TopicsResponse
-import com.ognjenlazic.tourismindubai.data.model.VisualItem
-import com.ognjenlazic.tourismindubai.data.repository.Repository
+import com.ognjenlazic.tourismindubai.domain.DataResult
+import com.ognjenlazic.tourismindubai.domain.Origin
+import com.ognjenlazic.tourismindubai.domain.TopicsError
+import com.ognjenlazic.tourismindubai.fake.FakeTopicsRepository
+import com.ognjenlazic.tourismindubai.fake.TestData
 import com.ognjenlazic.tourismindubai.ui.mainscreen.MainScreenViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.StandardTestDispatcher
-import org.junit.Before
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
 
+/**
+ * Covers state mapping and error recovery. The ViewModel under test is a real instance —
+ * only the repository is a fake.
+ */
 class MainScreenViewModelTest {
 
-    private lateinit var repository: Repository
-    private lateinit var viewModel: MainScreenViewModel
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
-    @Before
-    fun setUp() {
-        repository = mock(Repository::class.java)
-        viewModel = mock(MainScreenViewModel::class.java)
-    }
-
-    private val scope = CoroutineScope(StandardTestDispatcher())
+    private val repository = FakeTopicsRepository()
 
     @Test
-    fun testFetchTopicsSuccess() {
-        scope.launch {
-            val soundData = listOf(CategoryItem(emoji = "🎵", label = "Music"))
-            val visualData = listOf(VisualItem(label = "Art", photo = "photo_url"))
-            val placeData = listOf(CategoryItem(emoji = "🏖️", label = "Beach"))
+    fun `starts in a loading state before the first result arrives`() = runTest {
+        val viewModel = MainScreenViewModel(repository)
 
-            val response =
-                TopicsResponse(Sound = soundData, Visuals = visualData, Places = placeData)
-            `when`(repository.getTopics()).thenReturn(response)
-
-            viewModel.fetchTopics()
-
-            viewModel.topicsState.collect {
-                assert(it.sound == soundData)
-                assert(it.visuals == visualData)
-                assert(it.places == placeData)
-            }
-        }
+        assertTrue(viewModel.uiState.value.isLoading)
+        assertFalse(viewModel.uiState.value.hasContent)
     }
 
     @Test
-    fun testFetchTopicsError() {
-        scope.launch {
-            val errorMessage = "Network error"
-            `when`(repository.getTopics()).thenThrow(RuntimeException(errorMessage))
+    fun `remote success maps into content without an offline banner`() = runTest {
+        repository.result = DataResult.Success(TestData.topics, Origin.REMOTE)
 
-            viewModel.fetchTopics()
+        val viewModel = MainScreenViewModel(repository)
+        advanceUntilIdle()
 
-            viewModel.errorState.test {
-                val item = awaitItem()
-                assert(item == "Failed to fetch topics: $errorMessage")
-            }
-        }
+        val state = viewModel.uiState.value
+        assertFalse(state.isLoading)
+        assertEquals(TestData.topics, state.topics)
+        assertFalse(state.isShowingCachedData)
+        assertNull(state.errorMessageRes)
     }
 
     @Test
-    fun testClearError() {
-        scope.launch {
-            viewModel.errorState.value = "Some error"
+    fun `cached success flags that the content is stale`() = runTest {
+        repository.result = DataResult.Success(TestData.staleTopics, Origin.CACHE)
 
-            viewModel.clearError()
+        val viewModel = MainScreenViewModel(repository)
+        advanceUntilIdle()
 
-            viewModel.errorState.test {
-                val item = awaitItem()
-                assert(item == null)
-            }
-        }
+        val state = viewModel.uiState.value
+        assertTrue(state.isShowingCachedData)
+        assertEquals(TestData.staleTopics, state.topics)
+        assertNull(state.errorMessageRes)
+    }
+
+    @Test
+    fun `failure surfaces an error message and stops loading`() = runTest {
+        repository.result = DataResult.Failure(TopicsError.NoDataAvailable)
+
+        val viewModel = MainScreenViewModel(repository)
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertFalse(state.isLoading)
+        assertEquals(R.string.error_no_data_available, state.errorMessageRes)
+    }
+
+    @Test
+    fun `retrying after a failure clears the error and loads content`() = runTest {
+        repository.result = DataResult.Failure(TopicsError.NoDataAvailable)
+        val viewModel = MainScreenViewModel(repository)
+        advanceUntilIdle()
+        assertEquals(R.string.error_no_data_available, viewModel.uiState.value.errorMessageRes)
+
+        repository.result = DataResult.Success(TestData.topics, Origin.REMOTE)
+        viewModel.fetchTopics()
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertNull(state.errorMessageRes)
+        assertEquals(TestData.topics, state.topics)
+        assertEquals(2, repository.callCount)
+    }
+
+    @Test
+    fun `dismissing the error leaves the rest of the state intact`() = runTest {
+        repository.result = DataResult.Success(TestData.staleTopics, Origin.CACHE)
+        val viewModel = MainScreenViewModel(repository)
+        advanceUntilIdle()
+
+        viewModel.clearError()
+
+        val state = viewModel.uiState.value
+        assertNull(state.errorMessageRes)
+        assertTrue(state.isShowingCachedData)
+        assertEquals(TestData.staleTopics, state.topics)
     }
 }

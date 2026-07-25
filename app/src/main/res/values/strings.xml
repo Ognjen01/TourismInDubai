@@ -7,4 +7,9 @@
     <string name="places">Places</string>
     <string name="next">next</string>
     <string name="ok">OK</string>
+    <string name="retry">Retry</string>
+    <string name="loading_topics">Loading topics</string>
+    <string name="showing_offline_content">You are offline. Showing saved topics.</string>
+    <string name="error_no_data_available">Topics could not be loaded and nothing has been saved yet. Check your connection and try again.</string>
+    <string name="error_unexpected">Something went wrong while loading topics. Please try again.</string>
 </resources>
