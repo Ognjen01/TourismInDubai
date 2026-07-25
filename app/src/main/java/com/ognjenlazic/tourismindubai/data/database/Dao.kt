@@ -4,12 +4,11 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ognjenlazic.tourismindubai.data.model.CategoryItem
 
 @Dao
 interface SoundDao {
     @Query("SELECT * FROM sounds")
-    suspend fun getAllSounds(): List<CategoryItem>
+    suspend fun getAllSounds(): List<SoundEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(sounds: List<SoundEntity>)
